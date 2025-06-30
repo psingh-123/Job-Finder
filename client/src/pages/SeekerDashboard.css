@@ -1,0 +1,144 @@
+:root {
+  --primary: #4361ee;
+  --primary-hover: #3a56d4;
+  --text-dark: #2b2d42;
+  --text-medium: #4a4a4a;
+  --text-light: #6c757d;
+  --bg-light: #f8f9fa;
+  --border: #e9ecef;
+  --success-bg: #e6f4ea;
+  --success-text: #276749;
+  --success-border: #c6e1c3;
+  --radius: 8px;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  background-color: var(--bg-light);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  color: var(--text-dark);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 1.5rem 0;
+  color: var(--text-dark);
+  position: relative;
+  padding-left: 12px;
+}
+
+h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 5px;
+  height: 70%;
+  width: 4px;
+  background-color: var(--primary);
+  border-radius: 4px;
+}
+
+/* Job Card Styling */
+.job-card {
+  background-color: white;
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow);
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.job-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--primary);
+}
+
+.job-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-dark);
+}
+
+.job-card p {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  color: var(--text-medium);
+}
+
+.job-card .phone {
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+/* Apply Button */
+.apply-button {
+  background-color: var(--primary);
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  margin-top: 0.75rem;
+  transition: background-color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.apply-button:hover {
+  background-color: var(--primary-hover);
+}
+
+/* Success Message Styling */
+.success-message {
+  margin-top: 1rem;
+  background-color: var(--success-bg);
+  color: var(--success-text);
+  border: 1px solid var(--success-border);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 500;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.success-message svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  body {
+    padding: 15px;
+  }
+  
+  .job-card {
+    padding: 1.25rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+}

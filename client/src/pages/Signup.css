@@ -1,0 +1,129 @@
+.signup-container {
+  max-width: 420px;
+  margin: 3rem auto;
+  padding: 2.5rem;
+  background-color: #f8fafc;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.signup-container h2 {
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+  color: #0f172a;
+}
+
+.toggle-link {
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  color: #64748b; /* More subtle base color */
+  display: inline-block;
+  padding: 0.5rem 0;
+  transition: all 0.3s ease;
+}
+
+.toggle-link a {
+  color: #0f172a; /* Your existing accent color */
+  font-weight: 600;
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 2px;
+  margin-left: 0.25rem;
+}
+
+.toggle-link a:hover {
+  color: #0f172a; /* Darker shade on hover */
+}
+
+/* Optional: Add underline animation */
+.toggle-link a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #6366f1;
+  transition: width 0.3s ease;
+}
+
+.toggle-link a:hover::after {
+  width: 100%;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.signup-form input {
+  padding: 14px;
+  margin: 10px 0;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #ffffe0;
+
+}
+
+.signup-form button {
+  margin-top: 1.5rem;
+  padding: 14px;
+  background-color: #0f172a; /* More vibrant color */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  font-family: 'Segoe UI', 'Inter', sans-serif; /* Modern font stack */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px; /* Slightly spaced letters */
+  box-shadow: 0 2px 4px rgba(79, 70, 229, 0.3); /* Subtle shadow */
+}
+
+.signup-form button:hover {
+  background-color: #00796b; /* Darker shade on hover */
+  transform: translateY(-1px); /* Slight lift effect */
+  box-shadow: 0 4px 8px rgba(79, 70, 229, 0.3); /* Enhanced shadow on hover */
+}
+
+.signup-form button:active {
+  transform: translateY(0); /* Reset when clicked */
+}
+.or-separator {
+  margin: 1.5rem 0 0.5rem;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+/* Google Button */
+.google-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
+  background-color: white;
+  color: #444;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-weight: 550;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+  width: 100%;
+
+}
+
+.google-button:hover {
+  box-shadow: 0 0 0 2px rgba(219, 68, 55, 0.3);
+}
+
+/* Google Logo */
+.google-button img {
+  width: 20px;
+  height: 20px;
+}
