@@ -17,21 +17,46 @@ const SeekerDashboard = () => {
     fetchJobs();
   }, []);
 
+  // const applyToJob = async (jobId) => {
+  //   try {
+  //     await axios.post(`http://localhost:5000/api/jobs/apply/${jobId}`, {}, {
+  //       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+  //     });
+  //     setAppliedJobId(jobId);
+  //     setMessage('Applied successfully');
+  //     setTimeout(() => {
+  //       setMessage('');
+  //       setAppliedJobId(null);
+  //     }, 3000);
+  //   } catch (err) {
+  //     setMessage('Failed to apply');
+  //   }
+  // };
+
   const applyToJob = async (jobId) => {
-    try {
-      await axios.post(`http://localhost:5000/api/jobs/apply/${jobId}`, {}, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-      });
+  try {
+    const res = await axios.post(`http://localhost:5000/api/jobs/apply/${jobId}`, {}, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+    });
+    setAppliedJobId(jobId);
+    setMessage(res.data.message); // ✅ will be "Applied successfully"
+  } catch (err) {
+    if (err.response && err.response.status === 400) {
+      // ✅ Already applied case
       setAppliedJobId(jobId);
-      setMessage('Applied successfully');
-      setTimeout(() => {
-        setMessage('');
-        setAppliedJobId(null);
-      }, 3000);
-    } catch (err) {
+      setMessage(err.response.data.message); // "Already applied"
+    } else {
+      // ❌ Server or other error
       setMessage('Failed to apply');
     }
-  };
+  }
+
+  setTimeout(() => {
+    setMessage('');
+    setAppliedJobId(null);
+  }, 3000);
+};
+
 
   return (
     <div>

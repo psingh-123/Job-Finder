@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './Login.css'; // Don’t forget to create this CSS file
+import './Login.css';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth(); // ✅ Correctly call useAuth at the top level
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -17,10 +19,11 @@ const Login = () => {
         password,
       });
 
-      localStorage.setItem('token', res.data.token);
+      const token = res.data.token;
+      const user = JSON.parse(atob(token.split('.')[1])); // Extract user from token
 
-      // Redirect based on role
-      const user = JSON.parse(atob(res.data.token.split('.')[1]));
+      login(user, token); // ✅ Update context
+
       navigate('/select-role');
     } catch (err) {
       console.error(err);
@@ -65,12 +68,12 @@ const Login = () => {
 
         <button onClick={handleGoogleLogin} className="google-button">
           <img
-              src="https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png"
-              alt="Google Logo"
-              className="google-logo"
+            src="https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png"
+            alt="Google Logo"
+            className="google-logo"
           />
           <span>Continue with Google</span>
-    </button>
+        </button>
       </div>
     </div>
   );

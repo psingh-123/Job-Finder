@@ -1,12 +1,13 @@
 const Job = require('../models/Job');
 const User = require('../models/User');
+const Notification = require('../models/Notification');
 
-
+// POST a new job
 exports.postJob = async (req, res) => {
   try {
     const newJob = new Job({
       ...req.body,
-      postedBy: req.user.id, // comes from middleware
+      postedBy: req.user.id,
     });
     await newJob.save();
     res.status(201).json(newJob);
@@ -15,6 +16,7 @@ exports.postJob = async (req, res) => {
   }
 };
 
+// GET all jobs
 exports.getAllJobs = async (req, res) => {
   try {
     const jobs = await Job.find().populate('postedBy', 'name email');
@@ -24,36 +26,59 @@ exports.getAllJobs = async (req, res) => {
   }
 };
 
+// APPLY to a job
 exports.applyToJob = async (req, res) => {
   try {
     const job = await Job.findById(req.params.jobId);
-    job.applicants.push(req.body.userId); // frontend should send userId
+    if (!job) return res.status(404).json({ error: 'Job not found' });
+
+    const userId = req.user.id;
+
+    const alreadyApplied = job.applicants.some(
+      applicantId => applicantId.toString() === userId
+    );
+
+    if (alreadyApplied) {
+      return res.status(400).json({ message: 'Already applied' });
+    }
+
+    job.applicants.push(userId);
     await job.save();
+
+    // Send notification to job poster
+    const applicant = await User.findById(userId);
+    await Notification.create({
+      user: job.postedBy, // recipient is the job poster
+      message: `${applicant.name} applied for your job: "${job.title}"`,
+    });
+
     res.status(200).json({ message: 'Applied successfully' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
-
+// GET jobs posted by the current poster (with applicants)
 exports.getPosterJobs = async (req, res) => {
   try {
-    const jobs = await Job.find({ postedBy: req.user.id });
+    const jobs = await Job.find({ postedBy: req.user.id }).populate('applicants', 'name email');
     res.json(jobs);
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
 };
 
+// GET all open jobs (public)
 exports.getAllOpenJobs = async (req, res) => {
   try {
-    const jobs = await Job.find(); // Add status filters if needed
+    const jobs = await Job.find();
     res.json(jobs);
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
 };
 
+// UPDATE user role and location
 exports.updateUserRole = async (req, res) => {
   const { role, location } = req.body;
   const userId = req.user.id;
@@ -80,3 +105,47 @@ exports.updateUserRole = async (req, res) => {
   }
 };
 
+// exports.deletePost = async (req, res) => {
+//   const job = await Job.findById(req.params.id);
+//   if (!job) return res.status(404).json({ message: 'Job not found' });
+
+// if (!job.postedBy) {
+//   return res.status(400).json({ message: "Job has no postedBy info" });
+// }
+
+
+//   // Optional: Ensure user owns the job before deleting
+//   if (job.user.toString() !== req.user.id)
+//     return res.status(403).json({ message: 'Unauthorized' });
+
+//   await job.remove();
+//   res.status(200).json({ message: 'Job deleted successfully' });
+// };
+
+exports.deletePost = async (req, res) => {
+  try {
+    const job = await Job.findById(req.params.id);
+
+    // 🔍 Job not found
+    if (!job) {
+      return res.status(404).json({ message: 'Job not found' });
+    }
+
+    // 🔍 Check if postedBy field exists (optional but useful)
+    if (!job.postedBy) {
+      return res.status(400).json({ message: 'Job has no postedBy info' });
+    }
+
+    // 🔒 Ensure the user deleting is the owner of the job
+    if (!job.postedBy.toString || job.postedBy.toString() !== req.user.id) {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
+
+    await job.deleteOne(); // or await job.remove() for older Mongoose versions
+    res.status(200).json({ message: 'Job deleted successfully' });
+
+  } catch (error) {
+    console.error('Error deleting job:', error);
+    res.status(500).json({ message: 'Server error while deleting job' });
+  }
+};
