@@ -52,3 +52,62 @@ A full-stack job platform that connects job posters and job seekers. Users can p
 
 ## 📁 Project Structure
 
+job-finder/
+├── client/               # React frontend
+│   ├── public/
+│   └── src/
+│       ├── components/   # Navbar, Home, Dashboard, Profile etc.
+│       ├── context/      # AuthContext for managing user auth state
+│       ├── pages/        # Login, Signup, Dashboards
+│       └── App.js
+│
+├── server/               # Express backend
+│   ├── config/           # DB connection and Passport strategy
+│   ├── controllers/      # Logic for jobs, auth, notifications
+│   ├── middleware/       # Auth middleware (JWT)
+│   ├── models/           # Mongoose schemas
+│   ├── routes/           # API routes
+│   └── server.js
+│
+├── .env                  # Environment variables
+├── .gitignore
+├── LICENSE
+└── README.md
+
+1️⃣ Backend Setup
+bash
+Copy
+Edit
+cd server
+npm install
+npm start
+
+Make sure to add a .env file in server/ like this:
+
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+
+2️⃣ Frontend Setup
+bash
+Copy
+Edit
+cd client
+npm install
+npm start
+
+This will start the React app on:
+👉 http://localhost:3000
+
+📄 License
+This project is licensed under the MIT License.
+
+🙋‍♂️ Author
+Made with ❤️ by PRASHANT SINGH (psingh-123)
+
+📄 License
+This project is licensed under the MIT License.
+
+
