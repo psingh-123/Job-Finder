@@ -8,8 +8,8 @@ const Contact = () => {
       <p>If you have any questions, feedback, or inquiries, feel free to reach out to us:</p>
       <ul>
         <li>Email: support@jobfinder.com</li>
-        <li>Phone: +91 9876543210</li>
-        <li>Address: 123 Job Street, Employment City, India</li>
+        <li>Phone: +91 8095874399</li>
+        <li>Address: IIIT DM Kurnool, Andhra Pradesh ,India</li>
       </ul>
     </div>
   );

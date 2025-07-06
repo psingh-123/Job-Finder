@@ -27,20 +27,6 @@
   font-size: 16px;
 }
 
-/* .navbar__user-icon {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  background-color: #007bff;
-  color: white;
-  font-weight: bold;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  margin-left: 10px;
-} */
 
 .navbar__user-icon {
   background-color: #00aaff;
@@ -55,7 +41,7 @@
 }
 
 .navbar__user-icon:hover {
-  background-color: #0ea5e9;
+  background-color: #0f172a;
 }
 
 .navbar__auth-section {
@@ -64,19 +50,20 @@
   gap: 12px;
 }
 
+
+.navbar__dropdown-btn,
 .navbar__logout-btn {
-  background-color: transparent;
-  border: 1px solid white;
-  color: white;
-  padding: 6px 12px;
-  font-size: 14px;
-  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  background-color: black;
+  border: none;
+  text-align: left;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-size: 14px;
 }
 
+.navbar__dropdown-btn:hover,
 .navbar__logout-btn:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: #0ea5e9;
 }
 
 .notification-bell {
@@ -132,21 +119,38 @@
 
 .nav-link {
   color: white;
-  margin-right: 16px;
   text-decoration: none;
   font-weight: 500;
 }
-.nav-link:hover {
-  text-decoration: underline;
-}
+
 
 .navbar__user-dropdown {
   position: absolute;
-  background-color: black;
-  right: 10px;
-  top: 60px;
-  /* border: 1px solid #ccc; */
-  padding: 10px;
-  z-index: 10;
-  border-radius: 4px;
+  right: 1rem;
+  top: 3.2rem;
+  background: #0f172a;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 100;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+/* Applies to all navbar items */
+.navbar__links a,
+.notification-bell,
+.navbar__user-icon {
+  transition: transform 0.2s  ease-in, color 0.2s ease;
+  display: inline-block;
+}
+
+/* Move up slightly on hover */
+.navbar__links a:hover,
+.notification-bell:hover,
+.navbar__user-icon:hover {
+  transform: translateY(-4px);
+  color: #1e90ff; /* Optional: Add hover color */
+  cursor: pointer;
 }

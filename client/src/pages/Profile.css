@@ -1,0 +1,36 @@
+.profile-container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px 30px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.profile-container h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.profile-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.profile-field label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #555;
+}
+
+.profile-field input,
+.profile-field select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 16px;
+  color: #333;
+}

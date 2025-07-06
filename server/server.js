@@ -5,6 +5,7 @@ const connectDB = require('./config/db');
 const session = require('express-session');
 const passport = require('passport');
 const notificationRoutes = require('./routes/notifications');
+const userRoutes = require('./routes/user');
 
 dotenv.config();
 require('./config/passport'); // Google strategy config
@@ -34,6 +35,7 @@ app.use(passport.session());
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/jobs', require('./routes/jobs')); 
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/user', userRoutes);
 
 const PORT = process.env.PORT || 5000;
 

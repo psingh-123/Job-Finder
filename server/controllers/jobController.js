@@ -105,23 +105,6 @@ exports.updateUserRole = async (req, res) => {
   }
 };
 
-// exports.deletePost = async (req, res) => {
-//   const job = await Job.findById(req.params.id);
-//   if (!job) return res.status(404).json({ message: 'Job not found' });
-
-// if (!job.postedBy) {
-//   return res.status(400).json({ message: "Job has no postedBy info" });
-// }
-
-
-//   // Optional: Ensure user owns the job before deleting
-//   if (job.user.toString() !== req.user.id)
-//     return res.status(403).json({ message: 'Unauthorized' });
-
-//   await job.remove();
-//   res.status(200).json({ message: 'Job deleted successfully' });
-// };
-
 exports.deletePost = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id);

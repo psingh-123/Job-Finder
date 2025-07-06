@@ -6,6 +6,7 @@ const jobSchema = new mongoose.Schema({
   description: String,
   category: String, // plumber, tutor, delivery, etc.
   location: String,
+  city:String,
   phone: String,
   postedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   applicants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],

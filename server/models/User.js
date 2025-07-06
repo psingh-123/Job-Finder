@@ -26,13 +26,16 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       enum: ['poster', 'seeker'],
-      // required: true,
       default: null,
     },
     location: {
       type: String,
       default: null,
     },
+    city: {
+      type: String,
+    required: true
+  } 
   },
   { timestamps: true }
 );

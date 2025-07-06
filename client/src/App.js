@@ -5,7 +5,9 @@ import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import { getUserFromToken } from './utils/auth';
+import Profile from './pages/Profile';
 import SelectRole from './pages/SelectRole';
+import GoogleSuccess from './pages/GoogleSuccess';
 import PosterDashboard from './pages/PosterDashboard';
 import SeekerDashboard from './pages/SeekerDashboard';
 import Footer from './components/Footer';
@@ -24,6 +26,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+         <Route path="/google-success" element={<GoogleSuccess />} />
+         <Route path="/profile" element={<Profile />} />
         <Route path="/select-role" element={<SelectRole />} />
         <Route path="/dashboard/poster" element={<PosterDashboard />} />
         <Route path="/dashboard/seeker" element={<SeekerDashboard />} />
