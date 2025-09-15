@@ -22,7 +22,7 @@ app.use(express.json());
 // Session for Google login
 app.use(
   session({
-    secret: 'keyboard cat',
+    secret: process.env.SESSION_SECRET || 'keyboard cat',
     resave: false,
     saveUninitialized: false,
   })
@@ -32,7 +32,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.use('/api/auth', require('./routes/auth'));
+app.use('/api/admin', require('./routes/admin'));
+app.use('/api/auth', require('./routes/auth'));   // login routes (Google + normal)
 app.use('/api/jobs', require('./routes/jobs')); 
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/user', userRoutes);

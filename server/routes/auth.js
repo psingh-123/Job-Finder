@@ -1,15 +1,33 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const jwt = require('jsonwebtoken');
 const { registerUser, loginUser } = require('../controllers/authController');
+const sendEmail = require('../utils/sendEmail'); // 👈 import your email util
 
-
+// Register
 router.post('/register', registerUser);
 
+// Normal Login
+router.post('/login', async (req, res) => {
+  try {
+    // call your existing loginUser controller
+    const result = await loginUser(req, res);
 
-router.post('/login', loginUser);
+    // loginUser should return user info (make sure it does)
+    if (result && result.user) {
+      await sendEmail(
+        result.user.email,
+        'Login Alert',
+        `Hello ${result.user.name || 'User'}, you successfully logged in at ${new Date().toLocaleString()}.`
+      );
+    }
+  } catch (err) {
+    console.error('❌ Failed to send login email:', err);
+  }
+});
 
-// 👇 This route is missing in your current file
+// Google Auth
 router.get(
   '/google',
   passport.authenticate('google', {
@@ -17,27 +35,36 @@ router.get(
   })
 );
 
-
+// Google Callback
 router.get(
   '/google/callback',
   passport.authenticate('google', {
     failureRedirect: '/login',
-    session: false, // we are using JWT
+    session: false, // using JWT
   }),
-  (req, res) => {
-    // generate JWT and send it as response
-    const jwt = require('jsonwebtoken');
+  async (req, res) => {
+    try {
+      const token = jwt.sign(
+        { id: req.user._id, role: req.user.role },
+        process.env.JWT_SECRET,
+        { expiresIn: '7d' }
+      );
 
-    const token = jwt.sign(
-      { id: req.user._id, role: req.user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: '7d' }
-    );
+      // 👇 Send login email
+      await sendEmail(
+        req.user.email,
+        'Login Alert',
+        `Hello ${req.user.name || 'User'}, you successfully logged in with Google at ${new Date().toLocaleString()}.`
+      );
 
-    // Redirect or send token as JSON
-    res.redirect(`http://localhost:3000/google-success?token=${token}`);
+      // Redirect with JWT
+      res.redirect(`http://localhost:3000/google-success?token=${token}`);
+    } catch (err) {
+      console.error('❌ Failed to send login email:', err);
+      res.redirect('/login');
+    }
   }
 );
 
-
 module.exports = router;
+

@@ -1,9 +1,10 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const sendEmail = require('../utils/sendEmail');
 
 const generateToken = (user) => {
-  return jwt.sign({ id: user._id,name: user.name, role: user.role }, process.env.JWT_SECRET, {
+  return jwt.sign({ id: user._id,name: user.name, role: user.role,isAdmin: user.isAdmin }, process.env.JWT_SECRET, {
     expiresIn: '7d',
   });
 };
@@ -58,6 +59,13 @@ exports.loginUser = async (req, res) => {
     if (!isMatch) return res.status(401).json({ message: 'Invalid credentials' });
 
     const token = generateToken(user);
+
+    await sendEmail(
+      user.email,
+      "Login Notification - Job Finder",
+      `Hello ${user.name},\n\nYou have successfully logged in at ${new Date().toLocaleString()}.\n\nIf this wasn’t you, please secure your account immediately.`
+    );
+
 
     res.status(200).json({
       user: {
