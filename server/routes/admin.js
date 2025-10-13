@@ -30,5 +30,29 @@ router.put('/make-admin/:id', protect, adminOnly, async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+router.delete("/users/:id", protect, adminOnly, async (req, res) => {
+  try {
+    const userId = req.params.id;
+    console.log("Attempting to delete user ID:", userId);
+
+    // Validate ObjectId
+    if (!userId.match(/^[0-9a-fA-F]{24}$/)) {
+      console.log("Invalid ObjectId:", userId);
+      return res.status(400).json({ message: "Invalid user ID" });
+    }
+
+    const deletedUser = await User.findByIdAndDelete(userId);
+    if (!deletedUser) {
+      console.log("User not found:", userId);
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    console.log("Deleted user successfully:", userId);
+    res.json({ message: "User deleted successfully" });
+  } catch (err) {
+    console.error("Delete error:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
 
 module.exports = router;

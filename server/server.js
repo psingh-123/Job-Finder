@@ -6,6 +6,9 @@ const session = require('express-session');
 const passport = require('passport');
 const notificationRoutes = require('./routes/notifications');
 const userRoutes = require('./routes/user');
+const adminRoutes = require('./routes/admin');
+const authRoutes = require('./routes/auth');
+const jobRoutes = require('./routes/jobs');
 
 dotenv.config();
 require('./config/passport'); // Google strategy config
@@ -32,9 +35,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.use('/api/admin', require('./routes/admin'));
-app.use('/api/auth', require('./routes/auth'));   // login routes (Google + normal)
-app.use('/api/jobs', require('./routes/jobs')); 
+app.use('/api/admin', adminRoutes);
+app.use('/api/auth', authRoutes);  
+app.use('/api/jobs', jobRoutes); 
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/user', userRoutes);
 

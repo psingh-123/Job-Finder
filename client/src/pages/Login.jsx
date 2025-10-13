@@ -1,14 +1,196 @@
-import React, { useState } from 'react';
+// // import React, { useState } from 'react';
+// // import { Link, useNavigate } from 'react-router-dom';
+// // import './Login.css';
+// // import axios from 'axios';
+// // import { useAuth } from '../context/AuthContext';
+
+// // const Login = () => {
+// //   const [email, setEmail] = useState('');
+// //   const [password, setPassword] = useState('');
+// //   const navigate = useNavigate();
+// //   const { login } = useAuth(); // ✅ Correctly call useAuth at the top level
+
+// //   const handleLogin = async (e) => {
+// //     e.preventDefault();
+
+// //     try {
+// //       const res = await axios.post('http://localhost:5000/api/auth/login', {
+// //         email,
+// //         password,
+// //       });
+
+// //       const token = res.data.token;
+// //       const user = JSON.parse(atob(token.split('.')[1])); // Extract user from token
+
+// //       login(user, token); // ✅ Update context
+
+// //       navigate('/select-role');
+// //     } catch (err) {
+// //       console.error(err);
+// //       alert('Login failed');
+// //     }
+// //   };
+
+// //   const handleGoogleLogin = () => {
+// //     window.location.href = 'http://localhost:5000/api/auth/google';
+// //   };
+
+// //   return (
+// //     <div className="login-container">
+// //       <div className="login-card">
+// //         <h2>Login</h2>
+
+// //         <p className="toggle-text">
+// //           Don’t have an account? <Link to="/signup">Sign up</Link>
+// //         </p>
+
+// //         <form onSubmit={handleLogin}>
+// //           <input
+// //             type="email"
+// //             placeholder="Email"
+// //             value={email}
+// //             onChange={(e) => setEmail(e.target.value)}
+// //             required
+// //           />
+
+// //           <input
+// //             type="password"
+// //             placeholder="Password"
+// //             value={password}
+// //             onChange={(e) => setPassword(e.target.value)}
+// //             required
+// //           />
+
+// //           <button type="submit" className="login-btn">Login</button>
+// //         </form>
+
+// //         <div className="or-separator">or</div>
+
+// //         <button onClick={handleGoogleLogin} className="google-button">
+// //           <img
+// //             src="https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png"
+// //             alt="Google Logo"
+// //             className="google-logo"
+// //           />
+// //           <span>Continue with Google</span>
+// //         </button>
+// //       </div>
+// //     </div>
+// //   );
+// // };
+
+// // export default Login;
+
+// import React, { useState } from 'react';
+// import { Link, useNavigate } from 'react-router-dom';
+// import './Login.css';
+// import axios from 'axios';
+// import { useAuth } from '../context/AuthContext';
+// import { jwtDecode } from 'jwt-decode'; // ✅ safer decoding
+
+// const Login = () => {
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+//   const navigate = useNavigate();
+//   const { login } = useAuth();
+
+//   const handleLogin = async (e) => {
+//     e.preventDefault();
+
+//     try {
+//       const res = await axios.post('http://localhost:5000/api/auth/login', {
+//         email,
+//         password,
+//       });
+
+//       const token = res.data.token;
+
+//       // ✅ Decode token safely to extract user info
+//       const user = jwtDecode(token);
+
+//       // ✅ Save user and token to context or localStorage
+//       login(user, token);
+
+//       console.log("User after login:", user);
+
+
+//       // ✅ Redirect based on user type
+//       if (user.isAdmin === "true" || user.isAdmin === true) {
+//         navigate('/admin');
+//       } else {
+//         navigate('/select-role');
+//       }
+
+//     } catch (err) {
+//       console.error(err);
+//       alert('Login failed');
+//     }
+//   };
+
+//   const handleGoogleLogin = () => {
+//     window.location.href = 'http://localhost:5000/api/auth/google';
+//   };
+
+//   return (
+//     <div className="login-container">
+//       <div className="login-card">
+//         <h2>Login</h2>
+
+//         <p className="toggle-text">
+//           Don’t have an account? <Link to="/signup">Sign up</Link>
+//         </p>
+
+//         <form onSubmit={handleLogin}>
+//           <input
+//             type="email"
+//             placeholder="Email"
+//             value={email}
+//             onChange={(e) => setEmail(e.target.value)}
+//             required
+//           />
+
+//           <input
+//             type="password"
+//             placeholder="Password"
+//             value={password}
+//             onChange={(e) => setPassword(e.target.value)}
+//             required
+//           />
+
+//           <button type="submit" className="login-btn">Login</button>
+//         </form>
+
+//         <div className="or-separator">or</div>
+
+//         <button onClick={handleGoogleLogin} className="google-button">
+//           <img
+//             src="https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png"
+//             alt="Google Logo"
+//             className="google-logo"
+//           />
+//           <span>Continue with Google</span>
+//         </button>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Login;
+
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { jwtDecode } from 'jwt-decode';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuth(); // ✅ Correctly call useAuth at the top level
+  const { user, login } = useAuth();
+
+  const [pendingUser, setPendingUser] = useState(null);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -20,16 +202,35 @@ const Login = () => {
       });
 
       const token = res.data.token;
-      const user = JSON.parse(atob(token.split('.')[1])); // Extract user from token
+      const decodedUser = jwtDecode(token);
 
-      login(user, token); // ✅ Update context
+      console.log('Decoded token:', decodedUser);
 
-      navigate('/select-role');
+      // ✅ Store user + token in AuthContext
+      login(decodedUser, token);
+
+      // ✅ Set temporary user for redirect useEffect
+      setPendingUser(decodedUser);
+
     } catch (err) {
       console.error(err);
       alert('Login failed');
     }
   };
+
+  // ✅ Redirect after AuthContext updates
+  useEffect(() => {
+    if (!pendingUser) return;
+
+    const isAdmin =
+      pendingUser.isAdmin === true || pendingUser.isAdmin === 'true';
+
+    if (isAdmin) {
+      navigate('/admin');
+    } else {
+      navigate('/select-role');
+    }
+  }, [pendingUser, navigate]);
 
   const handleGoogleLogin = () => {
     window.location.href = 'http://localhost:5000/api/auth/google';
@@ -39,11 +240,9 @@ const Login = () => {
     <div className="login-container">
       <div className="login-card">
         <h2>Login</h2>
-
         <p className="toggle-text">
           Don’t have an account? <Link to="/signup">Sign up</Link>
         </p>
-
         <form onSubmit={handleLogin}>
           <input
             type="email"
@@ -52,7 +251,6 @@ const Login = () => {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-
           <input
             type="password"
             placeholder="Password"
@@ -60,12 +258,9 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-
           <button type="submit" className="login-btn">Login</button>
         </form>
-
         <div className="or-separator">or</div>
-
         <button onClick={handleGoogleLogin} className="google-button">
           <img
             src="https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png"
