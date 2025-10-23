@@ -2,15 +2,16 @@
   max-width: 400px;
   margin: 50px auto;
   padding: 20px 30px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  background-color: #333; /* Changed to dark grey */
+  border-radius: 12px; /* Slightly larger radius */
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3); /* Enhanced shadow */
+  border: 1px solid #334155; /* Added border */
 }
 
 .profile-container h2 {
   text-align: center;
   margin-bottom: 30px;
-  color: #333;
+  color: #f1f5f9; /* Light text for dark background */
 }
 
 .profile-field {
@@ -22,15 +23,23 @@
 .profile-field label {
   margin-bottom: 6px;
   font-weight: 600;
-  color: #555;
+  color: #ffff; /* Lighter grey for labels */
 }
 
 .profile-field input,
 .profile-field select {
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #475569; /* Darker border */
   border-radius: 5px;
-  background-color: #fff;
+  background-color: #334155; /* Dark input background */
   font-size: 16px;
-  color: #333;
+  color: #f1f5f9; /* Light text color */
+}
+
+/* Optional: Add focus states */
+.profile-field input:focus,
+.profile-field select:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
 }

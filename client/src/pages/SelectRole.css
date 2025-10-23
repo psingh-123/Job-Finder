@@ -34,11 +34,11 @@ input[type="text"] {
 
 button {
   padding: 0.7rem 1.2rem;
-  background-color: #007bff;
+  background-color: #0f172a;
   color: white;
   border: none;
   border-radius: 8px;
-  cursor: pointer;
+  cursor: pointer; 
   font-weight: bold;
 }
 

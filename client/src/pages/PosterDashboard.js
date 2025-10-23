@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import ReportAbuseModal from "../components/ReportAbuseModal";
 import './PosterDashboard.css';
 
 const PosterDashboard = () => {
   const [jobs, setJobs] = useState([]);
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showReport, setShowReport] = useState(false);
 
 
   const [formData, setFormData] = useState({
@@ -98,6 +100,31 @@ const PosterDashboard = () => {
 
   return (
     <div className="dashboard-container">
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <button
+            onClick={() => setShowReport(true)}
+            style={{
+              backgroundColor: "#ff4d4d",
+              color: "white",
+              padding: "8px 16px",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+              marginBottom: "10px",
+            }}
+          >
+            Report Abuse
+          </button>
+        </div>
+
+        <ReportAbuseModal
+          show={showReport}
+          onClose={() => setShowReport(false)}
+          role="poster"
+          reportedUser={null}
+          reportedJob={null}
+        />
+
       <h2 className="heading">Post Job</h2>
       {isSubmitting && <p className="loading-message">Posting job, please wait...</p>}
       {isSubmitting && <div className="spinner"></div>}

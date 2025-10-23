@@ -14,6 +14,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import AdminRoute from './components/AdminRoute';
 import AdminUsers from "./pages/AdminUsers";
 import AdminJobs from "./pages/AdminJobs";
+import AdminReports from "./pages/AdminReports";
 import NotAuthorized from './pages/NotAuthorized';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -63,6 +64,16 @@ function App() {
           </AdminRoute>
         }
       />
+
+      <Route
+        path="/admin/reports"
+        element={
+          <AdminRoute>
+            <AdminReports />
+          </AdminRoute>
+        }
+      />
+
 
         <Route path="/not-authorized" element={<NotAuthorized />} />
 
