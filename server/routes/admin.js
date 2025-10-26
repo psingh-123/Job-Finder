@@ -1,6 +1,7 @@
 // routes/admin.js
 const express = require('express');
 const User = require('../models/User');
+const Job = require('../models/Job'); 
 const { protect } = require('../middleware/authMiddleware');
 const { adminOnly } = require('../middleware/roleMiddleware');
 
@@ -54,5 +55,74 @@ router.delete("/users/:id", protect, adminOnly, async (req, res) => {
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });
+
+
+router.get("/analytics", async (req, res) => {
+  try {
+    // Get total counts
+    const totalUsers = await User.countDocuments();
+    const totalJobs = await Job.countDocuments();
+
+    // Monthly users (group by month)
+    const userStats = await User.aggregate([
+      {
+        $group: {
+          _id: { $month: "$createdAt" },
+          count: { $sum: 1 },
+        },
+      },
+      { $sort: { "_id": 1 } },
+    ]);
+
+    // Monthly jobs (group by month)
+    const jobStats = await Job.aggregate([
+      {
+        $group: {
+          _id: { $month: "$createdAt" },
+          count: { $sum: 1 },
+        },
+      },
+      { $sort: { "_id": 1 } },
+    ]);
+
+    // Convert month numbers to readable names
+    const monthNames = [
+      "",
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+
+    const formattedUserStats = userStats.map((u) => ({
+      month: monthNames[u._id],
+      count: u.count,
+    }));
+
+    const formattedJobStats = jobStats.map((j) => ({
+      month: monthNames[j._id],
+      count: j.count,
+    }));
+
+    res.json({
+      totalUsers,
+      totalJobs,
+      userStats: formattedUserStats,
+      jobStats: formattedJobStats,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 
 module.exports = router;

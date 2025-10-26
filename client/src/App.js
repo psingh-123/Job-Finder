@@ -12,6 +12,7 @@ import PosterDashboard from './pages/PosterDashboard';
 import SeekerDashboard from './pages/SeekerDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminRoute from './components/AdminRoute';
+import AdminAnalytics from "./pages/AdminAnalytics";
 import AdminUsers from "./pages/AdminUsers";
 import AdminJobs from "./pages/AdminJobs";
 import NotAuthorized from './pages/NotAuthorized';
@@ -62,6 +63,13 @@ function App() {
             <AdminJobs />
           </AdminRoute>
         }
+      />
+
+      <Route path="/admin/analytics" element={
+          <AdminRoute>
+            <AdminAnalytics />
+          </AdminRoute>
+        } 
       />
 
         <Route path="/not-authorized" element={<NotAuthorized />} />
