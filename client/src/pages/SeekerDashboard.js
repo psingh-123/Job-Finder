@@ -1,6 +1,6 @@
 import './SeekerDashboard.css';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../api';
 
 const SeekerDashboard = () => {
   const [selectedCity, setSelectedCity] = useState('');
@@ -12,7 +12,7 @@ const SeekerDashboard = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/jobs', {
+        const res = await axios.get('/api/jobs', {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         setJobs(res.data);
@@ -27,7 +27,7 @@ const SeekerDashboard = () => {
 
   const applyToJob = async (jobId) => {
     try {
-      const res = await axios.post(`http://localhost:5000/api/jobs/apply/${jobId}`, {}, {
+      const res = await axios.post(`/api/jobs/apply/${jobId}`, {}, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       setAppliedJobId(jobId);

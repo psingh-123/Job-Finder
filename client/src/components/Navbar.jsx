@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import './Navbar.css';
-import axios from 'axios';
+import axios from '../api';
 import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
@@ -29,7 +29,7 @@ const Navbar = () => {
 
   const fetchNotifications = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/notifications', {
+      const res = await axios.get('/api/notifications', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -47,7 +47,7 @@ const Navbar = () => {
     if (!showNotifications) {
       try {
         await axios.post(
-          'http://localhost:5000/api/notifications/mark-read',
+          '/api/notifications/mark-read',
           {},
           {
             headers: {
@@ -56,7 +56,7 @@ const Navbar = () => {
           }
         );
 
-        const res = await axios.get('http://localhost:5000/api/notifications', {
+        const res = await axios.get('/api/notifications', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },

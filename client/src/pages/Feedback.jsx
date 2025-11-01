@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios from "../api";
 import "./FeedbackForm.css";
 
 const FeedbackForm = () => {
@@ -22,7 +22,7 @@ const FeedbackForm = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post("http://localhost:5000/api/feedback", formData); // backend route
+  await axios.post('/api/feedback', formData); // backend route
       setSuccess(true);
       setFormData({ name: "", email: "", subject: "", message: "", rating: 0 });
     } catch (err) {

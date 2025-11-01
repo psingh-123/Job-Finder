@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../api";
 import {
   LineChart,
   Line,
@@ -19,7 +19,7 @@ const AdminAnalytics = () => {
   useEffect(() => {
     const fetchAnalytics = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/admin/analytics", {
+        const res = await axios.get('/api/admin/analytics', {
           withCredentials: true,
         });
         console.log("Analytics Data:", res.data);

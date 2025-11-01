@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../api';
 import './PosterDashboard.css';
 
 const PosterDashboard = () => {
@@ -26,7 +26,7 @@ const PosterDashboard = () => {
 
   const fetchJobs = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/jobs/poster-dashboard', {
+      const res = await axios.get('/api/jobs/poster-dashboard', {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       setJobs(res.data);
@@ -56,7 +56,7 @@ const PosterDashboard = () => {
   };
 
   try {
-    await axios.post('http://localhost:5000/api/jobs/post', jobData, {
+    await axios.post('/api/jobs/post', jobData, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
     });
     setMessage('Job posted successfully!');
@@ -85,7 +85,7 @@ const PosterDashboard = () => {
     if (!window.confirm('Are you sure you want to delete this job?')) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/jobs/${jobId}`, {
+      await axios.delete(`/api/jobs/${jobId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }

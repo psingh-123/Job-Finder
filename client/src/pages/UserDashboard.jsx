@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext"; // adjust path if needed
+import axios from '../api';
 import { useNavigate } from "react-router-dom";
 
 const UserDashboard = () => {
@@ -11,14 +12,10 @@ const UserDashboard = () => {
     // Example: Fetch applied jobs from backend if available
     const fetchJobs = async () => {
       try {
-        const token = localStorage.getItem("token");
-        const res = await fetch("http://localhost:5000/api/jobs/applied", {
-          headers: { Authorization: `Bearer ${token}` },
+        const res = await axios.get('/api/jobs/applied', {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
-        if (res.ok) {
-          const data = await res.json();
-          setAppliedJobs(data);
-        }
+        setAppliedJobs(res.data);
       } catch (err) {
         console.error(err);
       }

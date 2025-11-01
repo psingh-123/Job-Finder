@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../api';
 import './SelectRole.css';
 
 const SelectRole = () => {
@@ -12,7 +12,7 @@ const SelectRole = () => {
     e.preventDefault();
 
     try {
-      await axios.put('http://localhost:5000/api/jobs/select-role', 
+      await axios.put('/api/jobs/select-role', 
         { role, location }, 
         {
           headers: {

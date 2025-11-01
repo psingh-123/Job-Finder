@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link,useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../api';
 import './Signup.css';
 
 const Signup = () => {
@@ -19,7 +19,7 @@ const Signup = () => {
     e.preventDefault();
     console.log("submitting the form..");
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/register', formData);
+  const res = await axios.post('/api/auth/register', formData);
       
       // Save token to localStorage
       localStorage.setItem('token', res.data.token);
@@ -33,7 +33,7 @@ const Signup = () => {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:5000/api/auth/google';
+  window.location.href = `${process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000'}/api/auth/google`;
   };
 
   return (

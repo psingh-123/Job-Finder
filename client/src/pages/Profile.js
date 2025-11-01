@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../api';
 import './Profile.css';
 
 const Profile = () => {
@@ -8,7 +8,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/user/profile', {
+        const res = await axios.get('/api/user/profile', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
