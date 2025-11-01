@@ -1,7 +1,7 @@
 // routes/report.js
 const express = require("express");
 const Report = require("../models/Report");
-const { protect } = require("../middleware/authMiddleware");
+const { protect } = require("../middleware/authmiddleware");
 
 const router = express.Router();
 
