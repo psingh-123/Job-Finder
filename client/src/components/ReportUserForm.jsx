@@ -35,7 +35,7 @@ const ReportUserForm = () => {
       };
 
       const { data } = await axios.post(
-        "http://localhost:5000/api/reports",
+        `${process.env.REACT_APP_BACKEND_URL}/api/reports`,
         { reportedEmail, description },
         config
       );

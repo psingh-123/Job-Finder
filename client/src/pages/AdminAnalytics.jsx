@@ -19,7 +19,7 @@ const AdminAnalytics = () => {
   useEffect(() => {
     const fetchAnalytics = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/admin/analytics", {
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/admin/analytics`, {
           withCredentials: true,
         });
         console.log("Analytics Data:", res.data);

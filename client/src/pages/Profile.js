@@ -8,7 +8,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/user/profile', {
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/user/profile`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },

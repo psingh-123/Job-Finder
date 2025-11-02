@@ -57,8 +57,10 @@ router.get(
         `Hello ${req.user.name || 'User'}, you successfully logged in with Google at ${new Date().toLocaleString()}.`
       );
 
-      // Redirect with JWT
-      res.redirect(`http://localhost:3000/google-success?token=${token}`);
+  // Redirect with JWT to frontend URL from env
+  const FRONTEND = process.env.FRONTEND_URL || 'http://localhost:3000';
+  // Redirect with JWT
+  res.redirect(`${FRONTEND}/google-success?token=${token}`);
     } catch (err) {
       console.error('❌ Failed to send login email:', err);
       res.redirect('/login');

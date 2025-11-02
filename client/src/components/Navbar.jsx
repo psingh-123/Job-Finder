@@ -29,7 +29,7 @@ const Navbar = () => {
 
   const fetchNotifications = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/notifications', {
+      const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/notifications`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -47,7 +47,7 @@ const Navbar = () => {
     if (!showNotifications) {
       try {
         await axios.post(
-          'http://localhost:5000/api/notifications/mark-read',
+          `${process.env.REACT_APP_BACKEND_URL}/api/notifications/mark-read`,
           {},
           {
             headers: {
@@ -56,7 +56,7 @@ const Navbar = () => {
           }
         );
 
-        const res = await axios.get('http://localhost:5000/api/notifications', {
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/notifications`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },

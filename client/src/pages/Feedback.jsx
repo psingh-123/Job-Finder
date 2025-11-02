@@ -22,7 +22,7 @@ const FeedbackForm = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post("http://localhost:5000/api/feedback", formData); // backend route
+  await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/feedback`, formData); // backend route
       setSuccess(true);
       setFormData({ name: "", email: "", subject: "", message: "", rating: 0 });
     } catch (err) {

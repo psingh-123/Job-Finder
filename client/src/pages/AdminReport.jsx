@@ -9,7 +9,7 @@ const AdminReports = () => {
   useEffect(() => {
     const fetchReports = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/reports/reports");
+  const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/reports/reports`);
         console.log("Fetched reports:", res.data); 
         setReports(res.data);
       } catch (error) {
@@ -25,7 +25,7 @@ const AdminReports = () => {
     if (!window.confirm("Are you sure you want to remove this job?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/reports/admin/jobs/${jobId}`);
+  await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/api/reports/admin/jobs/${jobId}`);
       setReports((prev) => prev.filter((r) => r.reportedJob?._id !== jobId));
       alert("Job removed successfully!");
     } catch (error) {

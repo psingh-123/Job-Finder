@@ -12,7 +12,7 @@ const SeekerDashboard = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/jobs', {
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/jobs`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         setJobs(res.data);
@@ -27,7 +27,7 @@ const SeekerDashboard = () => {
 
   const applyToJob = async (jobId) => {
     try {
-      const res = await axios.post(`http://localhost:5000/api/jobs/apply/${jobId}`, {}, {
+      const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/jobs/apply/${jobId}`, {}, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       setAppliedJobId(jobId);
