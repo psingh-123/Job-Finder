@@ -20,6 +20,8 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Privacy from './pages/Privacy';
 import { useAuth } from "./context/AuthContext";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function App() {

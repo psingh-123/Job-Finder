@@ -67,9 +67,7 @@ const SeekerDashboard = () => {
       <h2>Available Jobs</h2>
       
       <div className="city-filter">
-        <label htmlFor="city-select">
-          Filter by City:
-        </label>
+        <label htmlFor="city-select">Filter by City:</label>
         <select
           id="city-select"
           value={selectedCity}
@@ -93,13 +91,18 @@ const SeekerDashboard = () => {
             <div className="job-card" key={job._id}>
               <h3>{job.title}</h3>
               <p>{job.description}</p>
-              
+
+              {/* ✅ Added Amount Section */}
+              <div className="job-amount">
+                <strong>Amount:</strong> ₹{job.amount || 'Not specified'}
+              </div>
+
               <div className="job-details">
                 <div className="detail-item phone">
                   <strong>Phone:</strong> {job.phone || 'N/A'}
                 </div>
                 <div className="detail-item location">
-                  <strong>Address:</strong> {job.location}
+                  <strong>Address:</strong> {job.location || job.house || 'N/A'}
                 </div>
                 <div className="detail-item city">
                   <strong>City:</strong> {job.city || 'N/A'}

@@ -9,6 +9,7 @@ const userRoutes = require('./routes/user');
 const adminRoutes = require('./routes/admin');
 const authRoutes = require('./routes/auth');
 const jobRoutes = require('./routes/jobs');
+const reportRoutes = require('./routes/report');
 
 dotenv.config();
 require('./config/passport'); // Google strategy config
@@ -46,6 +47,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/jobs', jobRoutes); 
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/reports', reportRoutes);
+
 
 const PORT = process.env.PORT || 5000;
 

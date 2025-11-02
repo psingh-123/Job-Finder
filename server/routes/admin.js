@@ -2,7 +2,7 @@
 const express = require('express');
 const User = require('../models/User');
 const Job = require('../models/Job'); 
-const { protect } = require('../middleware/authMiddleware');
+const { protect } = require('../middleware/authmiddleware');
 const { adminOnly } = require('../middleware/roleMiddleware');
 
 const router = express.Router();
