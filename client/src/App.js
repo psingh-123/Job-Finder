@@ -13,6 +13,7 @@ import SeekerDashboard from './pages/SeekerDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminRoute from './components/AdminRoute';
 import AdminAnalytics from "./pages/AdminAnalytics";
+import AdminReports from "./pages/AdminReport";
 import AdminUsers from "./pages/AdminUsers";
 import AdminJobs from "./pages/AdminJobs";
 import NotAuthorized from './pages/NotAuthorized';
@@ -28,7 +29,11 @@ function App() {
   const { user } = useAuth(); // ✅ use context
 
   return (
-    <>
+    <div style={{ 
+      backgroundColor: '#0f172a', 
+      minHeight: '100vh',
+      color: '#f1f5f9'
+    }}>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -89,12 +94,22 @@ function App() {
           }
         />
 
+        <Route
+            path="/admin/reports"
+            element={
+            <AdminRoute>
+               <AdminReports />
+            </AdminRoute>
+            }
+        />
+
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/privacy" element={<Privacy />} />
       </Routes>
+      <ToastContainer position="top-right" autoClose={3000} />
       <Footer />
-    </>
+    </div>
   );
 }
 

@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const ReportUserForm = () => {
-  const [reportedEmail, setReportedEmail] = useState("");
+const ReportUserForm = ({ reportedEmail, onClose = () => {} }) => {
   const [description, setDescription] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!reportedEmail || !description) {
-      toast.error("❌ All fields are required");
+    if (!description.trim()) {
+      toast.error("❌ Please describe the issue");
       return;
     }
 
@@ -21,101 +20,104 @@ const ReportUserForm = () => {
     try {
       const token = localStorage.getItem("token");
 
-      if (!token) {
-        toast.error("⚠️ Not authorized, no token found. Please login first.");
-        setIsSubmitting(false);
-        return;
-      }
-
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
-      const { data } = await axios.post(
+      await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/reports`,
         { reportedEmail, description },
-        config
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
 
-      // Success message with longer duration
-      toast.success("✅ Report submitted successfully! Our team will review it shortly.", {
-        autoClose: 5000,
-        position: "top-center",
-      });
-      
-      console.log("Report response:", data);
-
-      // Clear form
-      setReportedEmail("");
+      toast.success("✅ Report submitted successfully");
       setDescription("");
-    } catch (error) {
-      console.error("Error submitting report:", error);
-      toast.error(
-        error.response?.data?.message || "❌ Failed to submit the report. Please try again."
-      );
+      
+      setTimeout(() => {
+        onClose();
+      }, 500);
+
+    } catch (err) {
+      toast.error("❌ Failed to submit report");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div style={{ maxWidth: "500px", margin: "auto", padding: "1rem" }}>
-      <h2>Report User</h2>
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "1rem" }}>
-          <label>Reported User Email</label>
-          <input
-            type="email"
-            value={reportedEmail}
-            onChange={(e) => setReportedEmail(e.target.value)}
-            placeholder="Enter reported user's email"
-            style={{ width: "100%", padding: "0.5rem" }}
-            disabled={isSubmitting}
-          />
-        </div>
+    <div style={{ width: "100%" }}>
+      {/* Header Row */}
+      <div style={{
+        padding: "10px 12px",
+        background: "#f8f9fa",
+        borderBottom: "1px solid #dee2e6",
+        fontWeight: "bold",
+        fontSize: "14px"
+      }}>
+        Report: {reportedEmail}
+      </div>
 
-        <div style={{ marginBottom: "1rem" }}>
-          <label>Description</label>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Describe the issue"
-            style={{ width: "100%", padding: "0.5rem", minHeight: "100px" }}
-            disabled={isSubmitting}
-          />
-        </div>
-
-        <button
-          type="submit"
-          disabled={isSubmitting}
+      {/* Description Row */}
+      <div style={{ padding: "12px" }}>
+        <textarea
+          placeholder="Describe the issue..."
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
           style={{
-            backgroundColor: isSubmitting ? "#6c757d" : "#007bff",
-            color: "#fff",
-            padding: "0.6rem 1rem",
+            width: "100%",
+            minHeight: "80px",
+            padding: "8px",
+            border: "1px solid #ced4da",
+            borderRadius: "4px",
+            resize: "vertical",
+            fontSize: "14px",
+            fontFamily: "inherit"
+          }}
+        />
+      </div>
+
+      {/* Buttons Row */}
+      <div style={{
+        padding: "10px 12px",
+        background: "#f8f9fa",
+        borderTop: "1px solid #dee2e6",
+        display: "flex",
+        gap: "10px",
+        justifyContent: "flex-end"
+      }}>
+        <button
+          type="button"
+          onClick={onClose}
+          style={{
+            padding: "6px 16px",
+            background: "#6c757d",
+            color: "white",
             border: "none",
-            borderRadius: "5px",
-            cursor: isSubmitting ? "not-allowed" : "pointer",
-            opacity: isSubmitting ? 0.6 : 1,
+            borderRadius: "4px",
+            fontSize: "14px",
+            cursor: "pointer",
+            fontWeight: "500"
           }}
         >
-          {isSubmitting ? "Submitting..." : "Submit Report"}
+          Cancel
         </button>
-      </form>
-
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+        
+        <button
+          type="submit"
+          onClick={handleSubmit}
+          disabled={isSubmitting}
+          style={{
+            padding: "6px 16px",
+            background: isSubmitting ? "#6c757d" : "#007bff",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            fontSize: "14px",
+            cursor: isSubmitting ? "not-allowed" : "pointer",
+            fontWeight: "500"
+          }}
+        >
+          {isSubmitting ? "Submitting..." : "Submit"}
+        </button>
+      </div>
     </div>
   );
 };

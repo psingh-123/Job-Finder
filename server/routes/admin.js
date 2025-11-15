@@ -4,6 +4,8 @@ const User = require('../models/User');
 const Job = require('../models/Job'); 
 const { protect } = require('../middleware/authmiddleware');
 const { adminOnly } = require('../middleware/roleMiddleware');
+const Report = require('../models/Report');
+
 
 const router = express.Router();
 
@@ -121,6 +123,15 @@ router.get("/analytics", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.get('/reports',protect, adminOnly, async (req, res) => {
+  try {
+    const reports = await Report.find().sort({ createdAt: -1 }); // sort by latest first
+    res.json(reports);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 

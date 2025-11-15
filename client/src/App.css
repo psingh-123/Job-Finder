@@ -1,3 +1,33 @@
+
+/* index.css or App.css */
+:root {
+  --bg-color: #0f172a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  background-color: #0f172a !important;
+  min-height: 100vh;
+  color: #f1f5f9;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+body {
+  background: #0f172a !important;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  background: #0f172a !important;
+  min-height: 100vh;
+}
+
 .App {
   text-align: center;
 }

@@ -26,6 +26,11 @@ const AdminDashboard = () => {
         <div className="card" onClick={() => navigate("/admin/analytics")}>
           <h2>📊 Site Analytics</h2>
         </div>
+        <div className="card" onClick={() => navigate("/admin/reports")}>
+          <h2>🚨 User Reports</h2>
+          <p>View reports submitted by users.</p>
+        </div>
+
       </div>
     </div>
   );
