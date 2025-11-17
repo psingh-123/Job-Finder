@@ -54,7 +54,7 @@ const Login = () => {
   }, [pendingUser, navigate]);
 
   const handleGoogleLogin = () => {
-    window.location.href = `https://naukari-dhundo.onrender.com//api/auth/google`;
+    window.location.href = `https://naukari-dhundo.onrender.com/api/auth/google`;
   };
 
   return (
