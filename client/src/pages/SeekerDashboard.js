@@ -239,7 +239,7 @@ const SeekerDashboard = () => {
   const applyToJob = async (jobId) => {
     try {
       const res = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/jobs/apply/${jobId}`,
+        `https://naukari-dhundo.onrender.com/api/jobs/apply/${jobId}`,
         {},
         {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
