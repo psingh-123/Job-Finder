@@ -19,7 +19,7 @@ const Signup = () => {
     e.preventDefault();
     console.log("submitting the form..");
     try {
-  const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/auth/register`, formData);
+  const res = await axios.post(`https://naukari-dhundo.onrender.com/api/auth/register`, formData);
       
       // Save token to localStorage
       localStorage.setItem('token', res.data.token);
@@ -33,7 +33,7 @@ const Signup = () => {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = `${process.env.REACT_APP_BACKEND_URL}/api/auth/google`;
+    window.location.href = `https://naukari-dhundo.onrender.com/api/auth/google`;
   };
 
   return (
