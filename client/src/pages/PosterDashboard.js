@@ -310,7 +310,7 @@ const PosterDashboard = () => {
     };
 
     try {
-      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/jobs/post`, jobData, {
+      await axios.post(`https://naukari-dhundo.onrender.com//api/jobs/post`, jobData, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       setMessage('Job posted successfully!');
@@ -338,7 +338,7 @@ const PosterDashboard = () => {
     if (!window.confirm('Are you sure you want to delete this job?')) return;
 
     try {
-      await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/api/jobs/${jobId}`, {
+      await axios.delete(`https://naukari-dhundo.onrender.com//api/jobs/${jobId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
