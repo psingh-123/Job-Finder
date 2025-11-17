@@ -12,7 +12,7 @@ const SelectRole = () => {
     e.preventDefault();
 
     try {
-      await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/jobs/select-role`, 
+      await axios.put(`https://naukari-dhundo.onrender.com/api/jobs/select-role`, 
         { role, location }, 
         {
           headers: {
