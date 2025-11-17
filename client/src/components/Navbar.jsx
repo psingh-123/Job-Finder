@@ -185,7 +185,7 @@ const Navbar = () => {
   const fetchNotifications = async () => {
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/api/notifications`,
+        `https://naukari-dhundo.onrender.com/api/notifications`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -207,7 +207,7 @@ const Navbar = () => {
     if (!showNotifications) {
       try {
         await axios.post(
-          `${process.env.REACT_APP_BACKEND_URL}/api/notifications/mark-read`,
+          `https://naukari-dhundo.onrender.com/api/notifications/mark-read`,
           {},
           {
             headers: {
@@ -217,7 +217,7 @@ const Navbar = () => {
         );
 
         const res = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/api/notifications`,
+          `https://naukari-dhundo.onrender.com/api/notifications`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('token')}`,
