@@ -12,7 +12,7 @@ const UserDashboard = () => {
     const fetchJobs = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/jobs/applied`, {
+        const res = await fetch(`https://naukari-dhundo.onrender.com/api/jobs/applied`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (res.ok) {
