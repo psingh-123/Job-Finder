@@ -17,7 +17,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/auth/login`, {
+      const res = await axios.post(`https://naukari-dhundo.onrender.com/api/auth/login`, {
         email,
         password,
       });
