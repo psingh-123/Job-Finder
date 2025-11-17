@@ -168,7 +168,7 @@ connectDB();
 
 // ------------------ CORS FIX ------------------
 const allowedOrigins = [
-  "http://localhost:3000",
+ "https://naukari-dhundo-frontend.onrender.com",
 ];
  
 app.use(
