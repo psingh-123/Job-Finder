@@ -21,7 +21,7 @@ const ReportUserForm = ({ reportedEmail, onClose = () => {} }) => {
       const token = localStorage.getItem("token");
 
       await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/reports`,
+        `https://naukari-dhundo.onrender.com/api/reports`,
         { reportedEmail, description },
         {
           headers: { Authorization: `Bearer ${token}` },
