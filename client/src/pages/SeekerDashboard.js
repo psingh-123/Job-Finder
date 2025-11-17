@@ -220,7 +220,7 @@ const SeekerDashboard = () => {
     const fetchJobs = async () => {
       try {
         const res = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/api/jobs`,
+          `https://naukari-dhundo.onrender.com/api/jobs`,
           {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
           }
