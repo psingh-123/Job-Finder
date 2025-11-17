@@ -279,7 +279,7 @@ const PosterDashboard = () => {
 
   const fetchJobs = async () => {
     try {
-      const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/jobs/poster-dashboard`, {
+      const res = await axios.get(`https://naukari-dhundo.onrender.com/api/jobs/poster-dashboard`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       setJobs(res.data);
