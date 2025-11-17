@@ -94,7 +94,7 @@ const AdminReports = () => {
       try {
         const token = localStorage.getItem("token");
         const res = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/api/admin/reports`,
+          `https://naukari-dhundo.onrender.com/api/admin/reports`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
